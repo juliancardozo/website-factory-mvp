@@ -1,0 +1,16 @@
+---
+import type { IconName } from '../content/types';
+import IconTile from './IconTile.astro';
+
+interface Props {
+  icon: IconName;
+  class?: string;
+}
+const { icon, class: className } = Astro.props;
+---
+<div class:list={['flex flex-col gap-4 rounded-card border border-borde bg-blanco p-6 shadow-card', className]}>
+  <IconTile icon={icon} />
+  <div class="flex flex-col gap-3">
+    <slot />
+  </div>
+</div>

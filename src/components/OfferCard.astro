@@ -1,0 +1,14 @@
+---
+// Para el futuro: sin campo de precio (REQ-006).
+import type { Offer } from '../content/types';
+
+interface Props {
+  offer: Offer;
+}
+const { offer } = Astro.props;
+---
+<li class="flex h-full flex-col rounded-card border border-borde bg-blanco p-5 shadow-card">
+  <h3 class="text-h3">{offer.title}</h3>
+  <p class="mt-2 text-tinta">{offer.description}</p>
+  <p class="mt-3 text-small text-tinta">Vigencia: {offer.validity}</p>
+</li>

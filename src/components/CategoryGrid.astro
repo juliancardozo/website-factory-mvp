@@ -1,0 +1,15 @@
+---
+import type { Category } from '../content/types';
+import CategoryCard from './CategoryCard.astro';
+
+interface Props {
+  categories: Category[];
+  density: 'compact' | 'full';
+  headingLevel?: 3;
+}
+const { categories, density } = Astro.props;
+const visible = categories.filter((c) => c.visible);
+---
+<ul role="list" class:list={['grid gap-4 md:grid-cols-2 md:gap-6 lg:grid-cols-3', density === 'full' && 'lg:gap-8']}>
+  {visible.map((category) => <CategoryCard category={category} density={density} />)}
+</ul>

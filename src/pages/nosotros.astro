@@ -1,0 +1,29 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Section from '../components/Section.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import BenefitList from '../components/BenefitList.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { ABOUT } from '../content/copy';
+import { pageSeo } from '../content/seo';
+
+const seo = pageSeo.nosotros;
+---
+<BaseLayout
+  title={seo.title}
+  description={seo.description}
+  ogTitle={seo.ogTitle}
+  ogDescription={seo.ogDescription}
+  jsonLd={seo.jsonLd}
+  currentPath="/nosotros"
+>
+  <PageHero title={ABOUT.S1_H1} paragraphs={[ABOUT.S1_P1, ABOUT.S1_P2_ALT]} illustration="gondola" />
+
+  <Section id="encontrar" tone="blanco" labelledBy="encontrar-titulo">
+    <SectionHeader headingId="encontrar-titulo" title={ABOUT.S2_H2} />
+    <BenefitList items={ABOUT.S2_ITEMS} columns={2} />
+  </Section>
+
+  <CtaBand headingId="visitanos-titulo" title={ABOUT.S3_H2} text={ABOUT.S3_P} secondary="products" />
+</BaseLayout>

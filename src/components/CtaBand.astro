@@ -1,0 +1,37 @@
+---
+import Section from './Section.astro';
+import SectionHeader from './SectionHeader.astro';
+import Illustration from './Illustration.astro';
+import DirectionsButton from './DirectionsButton.astro';
+import CallButton from './CallButton.astro';
+import HoursLink from './HoursLink.astro';
+import CtaLink from './CtaLink.astro';
+import { CTA } from '../content/copy';
+
+interface Props {
+  id?: string;
+  headingId: string;
+  title: string;
+  text: string;
+  secondary: 'call' | 'products' | 'hours';
+  hoursHref?: '#horarios' | '/#horarios' | '/contacto#horarios';
+}
+const { id = 'visitanos', headingId, title, text, secondary, hoursHref = '/contacto#horarios' } = Astro.props;
+---
+<Section id={id} tone="verde-oscuro" labelledBy={headingId} spacing="md" class="overflow-hidden">
+  <Illustration slot="background" name="hojas" class="pointer-events-none absolute inset-0 h-full w-full opacity-30" />
+  <div class="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+    <div>
+      <SectionHeader headingId={headingId} title={title} surface="dark" class="!mb-3" />
+      <p class="max-w-texto text-lead text-crema">{text}</p>
+    </div>
+    <div class="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center lg:shrink-0">
+      <DirectionsButton variant="primary" surface="dark" block="mobile" />
+      {secondary === 'call' && <CallButton variant="secondary" surface="dark" block="mobile" />}
+      {secondary === 'products' && (
+        <CtaLink href="/productos" label={CTA.PRODUCTS} variant="secondary" surface="dark" icon="arrow-right" block="mobile" />
+      )}
+      {secondary === 'hours' && <HoursLink href={hoursHref} surface="dark" />}
+    </div>
+  </div>
+</Section>

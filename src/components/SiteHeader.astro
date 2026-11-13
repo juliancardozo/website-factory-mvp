@@ -1,0 +1,78 @@
+---
+// Header sticky (design-system §7.2). Menú móvil = disclosure con mejora progresiva:
+// sin JS, la lista de navegación queda visible bajo el header y el botón no se muestra.
+import { navItems } from '../content/site';
+import { GLB } from '../content/copy';
+import Wordmark from './Wordmark.astro';
+import NavLinks from './NavLinks.astro';
+import DirectionsButton from './DirectionsButton.astro';
+import Icon from './Icon.astro';
+import Container from './Container.astro';
+
+interface Props {
+  currentPath: string;
+}
+const { currentPath } = Astro.props;
+const items = navItems.map(({ href, label }) => ({ href, label }));
+---
+<header data-site-header data-menu="static" class="group sticky top-0 z-40 border-b border-borde bg-blanco">
+  <Container class="flex h-16 items-center justify-between gap-2 md:h-18 md:gap-6">
+    <Wordmark surface="light" size="md" />
+
+    <nav aria-label={GLB.NAV_ARIA} class="ml-auto hidden md:block">
+      <NavLinks items={items} currentPath={currentPath} layout="inline" />
+    </nav>
+
+    <div class="flex items-center gap-2 max-md:ml-auto">
+      <DirectionsButton compact class="md:hidden" />
+      <DirectionsButton size="md" class="max-md:hidden" />
+      <button
+        type="button"
+        hidden
+        data-menu-button
+        aria-expanded="false"
+        aria-controls="menu-principal"
+        aria-label={GLB.NAV_MENU_ARIA_OPEN}
+        data-label-open={GLB.NAV_MENU_ARIA_OPEN}
+        data-label-close={GLB.NAV_MENU_ARIA_CLOSE}
+        class="inline-flex min-h-11 min-w-11 items-center justify-center gap-1.5 rounded-btn border-2 border-verde-oscuro px-2.5 font-semibold text-verde-oscuro transition-colors duration-150 hover:bg-crema md:hidden"
+      >
+        <Icon name="menu" size={20} class="group-data-[menu=open]:hidden" />
+        <Icon name="close" size={20} class="hidden group-data-[menu=open]:block" />
+        <span class="max-[399px]:sr-only">{GLB.NAV_MENU}</span>
+      </button>
+    </div>
+  </Container>
+
+  <div id="menu-principal" class="border-t border-borde bg-blanco shadow-raised md:hidden motion-safe:transition-opacity motion-safe:duration-150">
+    <nav aria-label={GLB.NAV_ARIA}>
+      <div class="mx-auto w-full max-w-site">
+        <NavLinks items={items} currentPath={currentPath} layout="stacked" />
+      </div>
+    </nav>
+  </div>
+</header>
+
+<script is:inline>
+  (() => {
+    const h = document.querySelector('[data-site-header]');
+    const b = h && h.querySelector('[data-menu-button]');
+    const p = document.getElementById('menu-principal');
+    if (!h || !b || !p) return;
+    const set = (open) => {
+      p.hidden = !open;
+      b.setAttribute('aria-expanded', String(open));
+      b.setAttribute('aria-label', open ? b.dataset.labelClose : b.dataset.labelOpen);
+      h.dataset.menu = open ? 'open' : 'closed';
+    };
+    b.hidden = false;
+    set(false);
+    b.addEventListener('click', () => set(p.hidden));
+    p.addEventListener('click', (e) => { if (e.target.closest('a')) set(false); });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !p.hidden) { set(false); b.focus(); }
+    });
+    const mq = window.matchMedia('(min-width: 48rem)');
+    mq.addEventListener('change', (m) => { if (m.matches) set(false); });
+  })();
+</script>

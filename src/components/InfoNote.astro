@@ -1,0 +1,21 @@
+---
+import Icon from './Icon.astro';
+import CallButton from './CallButton.astro';
+
+interface Props {
+  text: string;
+  action?: 'call';
+}
+const { text, action } = Astro.props;
+---
+<div class="mt-6 flex max-w-texto flex-col gap-2 rounded-r-card border-l-4 border-verde bg-blanco p-4 md:p-5">
+  <div class="flex items-start gap-3">
+    <Icon name="basket" size={24} class="mt-0.5 text-verde-oscuro" />
+    <p class="text-tinta">{text}</p>
+  </div>
+  {action === 'call' && (
+    <div class="pl-9">
+      <CallButton variant="ghost" />
+    </div>
+  )}
+</div>

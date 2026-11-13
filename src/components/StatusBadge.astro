@@ -1,0 +1,14 @@
+---
+import Icon from './Icon.astro';
+
+interface Props {
+  label: string;
+  srText: string;
+}
+const { label, srText } = Astro.props;
+---
+<span class="inline-flex items-center gap-1 rounded-full bg-amarillo px-2.5 py-0.5 font-sans text-small font-semibold text-tinta">
+  <Icon name="clock" size={14} />
+  <span>{label}</span>
+  <span class="sr-only"> {srText}</span>
+</span>

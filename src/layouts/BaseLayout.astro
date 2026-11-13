@@ -1,0 +1,51 @@
+---
+// Layout base (design-system #1, contrato C-02). Sin canonical, og:url ni og:image (sin dominio confirmado).
+import '../styles/global.css';
+import { GLB } from '../content/copy';
+import { buildJsonLd, SITE_NAME } from '../content/seo';
+import SkipLink from '../components/SkipLink.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  ogTitle?: string;
+  ogDescription?: string;
+  jsonLd?: boolean;
+  currentPath?: string;
+}
+const {
+  title,
+  description,
+  ogTitle = title,
+  ogDescription = description,
+  jsonLd = false,
+  currentPath = Astro.url.pathname,
+} = Astro.props;
+---
+<!doctype html>
+<html lang="es-AR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#FFFFFF" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_AR" />
+    <meta property="og:site_name" content={SITE_NAME} />
+    <meta property="og:title" content={ogTitle} />
+    <meta property="og:description" content={ogDescription} />
+    {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(buildJsonLd())} />}
+  </head>
+  <body class="min-h-screen bg-crema font-sans text-tinta antialiased">
+    <SkipLink label={GLB.SKIP} />
+    <SiteHeader currentPath={currentPath} />
+    <main id="contenido" tabindex="-1">
+      <slot />
+    </main>
+    <SiteFooter />
+  </body>
+</html>

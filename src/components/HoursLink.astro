@@ -1,0 +1,13 @@
+---
+import type { Surface } from '../content/types';
+import { CTA } from '../content/copy';
+import CtaLink from './CtaLink.astro';
+
+interface Props {
+  href: '#horarios' | '/#horarios' | '/contacto#horarios';
+  surface?: Surface;
+  class?: string;
+}
+const { href, surface = 'light', class: className } = Astro.props;
+---
+<CtaLink href={href} label={CTA.HOURS} variant="ghost" surface={surface} icon="clock" class={className} />

@@ -1,0 +1,30 @@
+---
+// offers.length === 0 => estado vacío; si hay ofertas => grilla de OfferCard (FR-006).
+import type { Offer, SectionTone } from '../content/types';
+import Section from './Section.astro';
+import SectionHeader from './SectionHeader.astro';
+import OffersEmptyState from './OffersEmptyState.astro';
+import OfferCard from './OfferCard.astro';
+
+interface Props {
+  id?: string;
+  tone?: SectionTone;
+  headingId: string;
+  title: string;
+  offers: Offer[];
+  empty: { title: string; text: string };
+  showHoursLink?: boolean;
+  hoursHref?: '#horarios' | '/#horarios' | '/contacto#horarios';
+}
+const { id = 'ofertas', tone = 'crema', headingId, title, offers, empty, showHoursLink = false, hoursHref } = Astro.props;
+---
+<Section id={id} tone={tone} labelledBy={headingId}>
+  <SectionHeader headingId={headingId} title={title} />
+  {offers.length === 0 ? (
+    <OffersEmptyState title={empty.title} text={empty.text} showHoursLink={showHoursLink} hoursHref={hoursHref} />
+  ) : (
+    <ul role="list" class="grid gap-4 md:grid-cols-2 md:gap-6 lg:grid-cols-3">
+      {offers.map((offer) => <OfferCard offer={offer} />)}
+    </ul>
+  )}
+</Section>

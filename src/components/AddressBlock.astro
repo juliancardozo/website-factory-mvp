@@ -1,0 +1,30 @@
+---
+// Dirección desde site.ts (única fuente).
+import type { Surface } from '../content/types';
+import { address } from '../content/site';
+import DirectionsButton from './DirectionsButton.astro';
+
+interface Props {
+  title?: string;
+  headingLevel?: 2 | 3;
+  headingId?: string;
+  format: 'full' | 'short' | 'regional';
+  showDirections?: boolean;
+  surface?: Surface;
+  headingClass?: string;
+}
+const { title, headingLevel = 3, headingId, format, showDirections = false, surface = 'light', headingClass } = Astro.props;
+const Heading = `h${headingLevel}` as 'h2' | 'h3';
+const dark = surface === 'dark';
+---
+<div>
+  {title && (
+    <Heading id={headingId} class:list={[headingClass ?? 'text-h3', dark && 'text-blanco']}>{title}</Heading>
+  )}
+  <address class:list={['not-italic', title && 'mt-3', dark ? 'text-crema' : 'text-tinta']}>{address[format]}</address>
+  {showDirections && (
+    <div class="mt-5">
+      <DirectionsButton variant="primary" surface={surface} block="mobile" />
+    </div>
+  )}
+</div>

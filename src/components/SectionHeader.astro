@@ -1,0 +1,24 @@
+---
+import type { Surface } from '../content/types';
+
+interface Props {
+  headingId: string;
+  title: string;
+  eyebrow?: string;
+  intro?: string;
+  align?: 'start' | 'center';
+  surface?: Surface;
+  class?: string;
+}
+const { headingId, title, eyebrow, intro, align = 'start', surface = 'light', class: className } = Astro.props;
+const dark = surface === 'dark';
+---
+<div class:list={['mb-6 md:mb-8 lg:mb-10', align === 'center' && 'text-center', className]}>
+  {eyebrow && (
+    <p class:list={['mb-2 text-small font-semibold uppercase tracking-[0.08em]', dark ? 'text-amarillo' : 'text-verde-oscuro']}>{eyebrow}</p>
+  )}
+  <h2 id={headingId} class:list={['text-h2', dark && 'text-blanco']}>{title}</h2>
+  {intro && (
+    <p class:list={['mt-3 max-w-texto text-lead', align === 'center' && 'mx-auto', dark ? 'text-crema' : 'text-tinta']}>{intro}</p>
+  )}
+</div>

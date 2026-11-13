@@ -1,0 +1,62 @@
+---
+import type { IconName, Surface } from '../content/types';
+import { SYS } from '../content/copy';
+import Icon from './Icon.astro';
+
+interface Props {
+  href: string;
+  label: string;
+  variant: 'primary' | 'secondary' | 'ghost';
+  surface?: Surface;
+  size?: 'md' | 'lg';
+  icon?: IconName;
+  external?: boolean;
+  ariaLabel?: string;
+  block?: 'mobile' | 'always' | 'never';
+  /** Versión compacta del header: menos padding (16px: blanco sobre verde exige ≥16px, DS §3); oculta el ícono externo bajo sm. */
+  compact?: boolean;
+  class?: string;
+}
+const {
+  href, label, variant, surface = 'light', size = 'lg', icon, external = false,
+  ariaLabel, block = 'never', compact = false, class: className,
+} = Astro.props;
+
+const base = 'inline-flex items-center justify-center gap-2 font-display font-semibold transition-[background-color,color,box-shadow,transform] duration-150 ease-out active:translate-y-px';
+
+const variants = {
+  light: {
+    primary: 'rounded-btn bg-verde text-blanco shadow-card hover:bg-verde-oscuro hover:shadow-raised active:bg-verde-oscuro active:shadow-none',
+    secondary: 'rounded-btn border-2 border-verde-oscuro bg-blanco text-verde-oscuro hover:bg-verde-oscuro hover:text-blanco',
+    ghost: 'text-verde-oscuro underline decoration-1 underline-offset-4 hover:decoration-2',
+  },
+  dark: {
+    primary: 'rounded-btn bg-amarillo text-tinta hover:bg-blanco hover:text-verde-oscuro',
+    secondary: 'rounded-btn border-2 border-crema text-crema hover:bg-crema hover:text-verde-oscuro',
+    ghost: 'text-crema underline decoration-1 underline-offset-4 hover:decoration-2',
+  },
+}[surface][variant];
+
+const sizeClass = variant === 'ghost'
+  ? 'min-h-11 px-1 text-base'
+  : compact
+    ? 'min-h-11 px-3 text-base'
+    : size === 'md'
+      ? 'min-h-11 px-4 text-base'
+      : 'min-h-12 px-5 text-base lg:px-6 lg:text-body-lg';
+
+const blockClass = { mobile: 'w-full sm:w-auto', always: 'w-full', never: '' }[block];
+const iconSize = 20;
+const externalAttrs = external ? { target: '_blank', rel: 'noopener noreferrer' } : {};
+---
+<a
+  href={href}
+  class:list={[base, variants, sizeClass, blockClass, className]}
+  aria-label={ariaLabel}
+  {...externalAttrs}
+>
+  {icon && <Icon name={icon} size={iconSize} />}
+  <span>{label}</span>
+  {external && <Icon name="external" size={16} class={compact ? 'max-sm:hidden' : undefined} />}
+  {external && !ariaLabel && <span class="sr-only"> {SYS.NEWTAB_SR}</span>}
+</a>

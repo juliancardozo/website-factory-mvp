@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- PLACEHOLDER: monograma provisional, no es el logo oficial del comercio -->
+  <rect width="64" height="64" rx="14" fill="#FFF9ED"/>
+  <path d="M22 50V14h22v7H30v8h12v7H30v14z" fill="#185C38"/>
+  <circle cx="47" cy="47" r="4" fill="#F5C84C"/>
+</svg>

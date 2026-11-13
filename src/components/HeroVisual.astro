@@ -1,0 +1,27 @@
+---
+// image null => ilustración "mercado" (UX-05). Con foto: astro:assets, sin texto encima (UX-04).
+import { Image } from 'astro:assets';
+import type { ImageAsset } from '../content/types';
+import Illustration from './Illustration.astro';
+
+interface Props {
+  image: ImageAsset | null;
+  priority?: boolean;
+  class?: string;
+}
+const { image, priority = true, class: className } = Astro.props;
+const frame = 'block w-full overflow-hidden rounded-media aspect-[4/3] md:aspect-[16/10] lg:aspect-[5/4]';
+---
+{image ? (
+  <Image
+    src={image.src}
+    alt={image.alt}
+    widths={[640, 960, 1280]}
+    sizes="(min-width: 1024px) 560px, 100vw"
+    loading={priority ? 'eager' : 'lazy'}
+    fetchpriority={priority ? 'high' : 'auto'}
+    class:list={[frame, 'object-cover', className]}
+  />
+) : (
+  <Illustration name="mercado" class:list={[frame, className]} />
+)}

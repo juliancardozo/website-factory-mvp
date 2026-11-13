@@ -1,0 +1,31 @@
+---
+import type { SectionTone } from '../content/types';
+import Container from './Container.astro';
+
+interface Props {
+  id?: string;
+  tone: SectionTone;
+  labelledBy: string;
+  spacing?: 'md' | 'lg';
+  width?: 'site' | 'texto';
+  class?: string;
+}
+const { id, tone, labelledBy, spacing = 'lg', width = 'site', class: className } = Astro.props;
+const toneClass = {
+  crema: 'bg-crema text-tinta',
+  blanco: 'bg-blanco text-tinta',
+  'verde-oscuro': 'bg-verde-oscuro text-crema',
+}[tone];
+const spacingClass = spacing === 'lg' ? 'py-14 md:py-18 lg:py-24' : 'py-12 md:py-14 lg:py-16';
+---
+<section
+  id={id}
+  aria-labelledby={labelledBy}
+  data-surface={tone === 'verde-oscuro' ? 'dark' : undefined}
+  class:list={['relative', toneClass, spacingClass, className]}
+>
+  <slot name="background" />
+  <Container width={width} class="relative z-10">
+    <slot />
+  </Container>
+</section>

@@ -1,0 +1,17 @@
+---
+import type { IconName } from '../content/types';
+import IconTile from './IconTile.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  icon: IconName;
+  headingLevel?: 3;
+}
+const { title, description, icon } = Astro.props;
+---
+<li class="flex flex-col gap-3">
+  <IconTile icon={icon} tone="crema" />
+  <h3 class="text-h3">{title}</h3>
+  <p class="text-tinta">{description}</p>
+</li>

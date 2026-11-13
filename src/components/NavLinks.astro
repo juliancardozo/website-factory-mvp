@@ -1,0 +1,44 @@
+---
+import type { Surface } from '../content/types';
+
+interface Props {
+  items: { href: string; label: string }[];
+  currentPath: string;
+  layout: 'inline' | 'stacked';
+  surface?: Surface;
+}
+const { items, currentPath, layout, surface = 'light' } = Astro.props;
+const norm = (p: string) => (p.length > 1 ? p.replace(/\/+$/, '') : p);
+const current = norm(currentPath);
+
+const linkClass = (active: boolean) => {
+  if (surface === 'dark') {
+    return 'inline-flex min-h-11 items-center text-crema underline decoration-1 underline-offset-[3px] hover:text-blanco hover:decoration-2';
+  }
+  if (layout === 'inline') {
+    return [
+      'inline-flex min-h-11 items-center border-b-[3px] font-semibold transition-colors duration-150',
+      active ? 'border-verde text-verde-oscuro' : 'border-transparent text-tinta hover:text-verde-oscuro hover:underline hover:underline-offset-4',
+    ].join(' ');
+  }
+  return [
+    'flex min-h-12 items-center border-l-4 px-4 font-semibold focus-visible:outline-offset-[-3px] hover:bg-crema',
+    active ? 'border-verde text-verde-oscuro' : 'border-transparent text-tinta',
+  ].join(' ');
+};
+---
+<ul
+  role="list"
+  class:list={[
+    surface === 'dark' ? 'flex flex-col gap-1' : layout === 'inline' ? 'flex items-center gap-6' : 'flex flex-col py-2',
+  ]}
+>
+  {items.map((item) => {
+    const active = norm(item.href) === current;
+    return (
+      <li>
+        <a href={item.href} class={linkClass(active)} aria-current={active ? 'page' : undefined}>{item.label}</a>
+      </li>
+    );
+  })}
+</ul>

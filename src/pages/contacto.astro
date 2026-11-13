@@ -1,0 +1,48 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Container from '../components/Container.astro';
+import InfoCard from '../components/InfoCard.astro';
+import AddressBlock from '../components/AddressBlock.astro';
+import HoursList from '../components/HoursList.astro';
+import PhoneBlock from '../components/PhoneBlock.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import MapEmbed from '../components/MapEmbed.astro';
+import { CONT } from '../content/copy';
+import { pageSeo } from '../content/seo';
+
+const seo = pageSeo.contacto;
+---
+<BaseLayout
+  title={seo.title}
+  description={seo.description}
+  ogTitle={seo.ogTitle}
+  ogDescription={seo.ogDescription}
+  jsonLd={seo.jsonLd}
+  currentPath="/contacto"
+>
+  <PageHero title={CONT.S1_H1} subtitle={CONT.S1_SUB} illustration="pin" />
+
+  <div class="bg-blanco py-14 md:py-18 lg:py-24">
+    <Container class="grid gap-10 lg:grid-cols-12 lg:items-start lg:gap-8">
+      <!-- S1 Datos de contacto (orden UX-13: Dirección → Horarios → Teléfono) -->
+      <div id="datos" class="grid gap-4 md:grid-cols-2 md:gap-6 lg:col-span-5 lg:grid-cols-1">
+        <InfoCard icon="map-pin">
+          <AddressBlock title={CONT.S1_H2_ADDR} headingLevel={2} format="full" showDirections />
+        </InfoCard>
+        <InfoCard icon="clock" class="scroll-mt-[calc(var(--header-h)+1rem)]">
+          <HoursList title={CONT.S1_H2_HOURS} headingLevel={2} headingId="horarios" />
+        </InfoCard>
+        <InfoCard icon="phone" class="md:col-span-2 lg:col-span-1">
+          <PhoneBlock title={CONT.S1_H2_PHONE} headingLevel={2} showCallButton />
+        </InfoCard>
+      </div>
+
+      <!-- S2 Mapa -->
+      <section id="mapa" aria-labelledby="mapa-titulo" class="lg:sticky lg:top-[calc(var(--header-h)+1.5rem)] lg:col-span-7">
+        <SectionHeader headingId="mapa-titulo" title={CONT.S2_H2} class="!mb-4 md:!mb-6" />
+        <MapEmbed title={CONT.S2_MAP_TITLE} fallbackText={CONT.S2_MAP_FALLBACK} />
+      </section>
+    </Container>
+  </div>
+</BaseLayout>

@@ -1,0 +1,29 @@
+---
+import type { IconName } from '../content/types';
+import { iconPaths } from './icons/paths';
+
+interface Props {
+  name: IconName;
+  size?: 14 | 16 | 20 | 24 | 28 | 32 | 48;
+  label?: string;
+  class?: string;
+}
+const { name, size = 24, label, class: className } = Astro.props;
+const a11y = label
+  ? { role: 'img' as const, 'aria-label': label }
+  : { 'aria-hidden': 'true' as const, focusable: 'false' as const };
+---
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 24 24"
+  width={size}
+  height={size}
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  class:list={['shrink-0', className]}
+  {...a11y}
+  set:html={iconPaths[name]}
+/>

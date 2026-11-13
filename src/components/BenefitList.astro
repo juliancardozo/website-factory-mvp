@@ -1,0 +1,13 @@
+---
+import type { IconName } from '../content/types';
+import BenefitItem from './BenefitItem.astro';
+
+interface Props {
+  items: readonly { title: string; description: string; icon: IconName }[];
+  columns?: 2 | 4;
+}
+const { items, columns = 4 } = Astro.props;
+---
+<ul role="list" class:list={['grid gap-8 md:grid-cols-2', columns === 4 ? 'lg:grid-cols-4' : 'lg:gap-10']}>
+  {items.map((item) => <BenefitItem title={item.title} description={item.description} icon={item.icon} />)}
+</ul>

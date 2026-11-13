@@ -1,0 +1,27 @@
+---
+import type { Surface } from '../content/types';
+import { TEL_HREF } from '../content/site';
+import { CTA } from '../content/copy';
+import CtaLink from './CtaLink.astro';
+
+interface Props {
+  variant?: 'primary' | 'secondary' | 'ghost';
+  surface?: Surface;
+  size?: 'md' | 'lg';
+  short?: boolean;
+  block?: 'mobile' | 'always' | 'never';
+  class?: string;
+}
+const { variant = 'secondary', surface = 'light', size = 'lg', short = false, block, class: className } = Astro.props;
+---
+<CtaLink
+  href={TEL_HREF}
+  label={short ? CTA.CALL_SHORT : CTA.CALL}
+  ariaLabel={CTA.CALL_ARIA}
+  variant={variant}
+  surface={surface}
+  size={size}
+  icon="phone"
+  block={block}
+  class={className}
+/>

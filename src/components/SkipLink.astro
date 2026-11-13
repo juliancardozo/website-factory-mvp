@@ -1,0 +1,11 @@
+---
+interface Props {
+  targetId?: string;
+  label: string;
+}
+const { targetId = 'contenido', label } = Astro.props;
+---
+<a
+  href={`#${targetId}`}
+  class="sr-only rounded-btn focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:inline-flex focus:min-h-11 focus:items-center focus:bg-verde-oscuro focus:px-4 focus:py-2 focus:font-semibold focus:text-blanco"
+>{label}</a>

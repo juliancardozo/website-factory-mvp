@@ -1,0 +1,30 @@
+---
+// Horarios desde site.ts (única fuente). Sin "abierto ahora" ni feriados (REQ-003, B-08).
+import type { Surface } from '../content/types';
+import { hours } from '../content/site';
+
+interface Props {
+  title?: string;
+  headingLevel?: 2 | 3;
+  headingId?: string;
+  surface?: Surface;
+  compact?: boolean;
+  headingClass?: string;
+}
+const { title, headingLevel = 3, headingId, surface = 'light', compact = false, headingClass } = Astro.props;
+const Heading = `h${headingLevel}` as 'h2' | 'h3';
+const dark = surface === 'dark';
+---
+<div>
+  {title && (
+    <Heading id={headingId} class:list={[headingClass ?? 'text-h3', dark && 'text-blanco']}>{title}</Heading>
+  )}
+  <dl class:list={[title && 'mt-3', dark ? 'text-crema' : 'text-tinta']}>
+    {hours.map((h) => (
+      <div class:list={['flex flex-wrap justify-between gap-x-4 border-b last:border-b-0', compact ? 'py-1.5' : 'py-2.5', dark ? 'border-crema/20' : 'border-borde']}>
+        <dt class="font-semibold">{h.days}</dt>
+        <dd class="tabular-nums">{h.value}</dd>
+      </div>
+    ))}
+  </dl>
+</div>

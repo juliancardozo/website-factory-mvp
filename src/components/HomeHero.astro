@@ -1,0 +1,35 @@
+---
+import type { ImageAsset } from '../content/types';
+import Container from './Container.astro';
+import DirectionsButton from './DirectionsButton.astro';
+import CallButton from './CallButton.astro';
+import HoursLink from './HoursLink.astro';
+import HeroVisual from './HeroVisual.astro';
+
+interface Props {
+  eyebrow: string;
+  title: string;
+  subtitle: string;
+  image: ImageAsset | null;
+}
+const { eyebrow, title, subtitle, image } = Astro.props;
+---
+<div class="bg-crema bg-[radial-gradient(60%_50%_at_85%_10%,rgb(245_200_76/0.25),transparent)]">
+  <Container class="grid gap-8 py-8 md:py-12 lg:grid-cols-12 lg:items-center lg:gap-10 lg:py-20">
+    <div class="motion-safe:animate-entrada lg:col-span-6">
+      <p class="mb-3 text-small font-semibold uppercase tracking-[0.08em] text-verde-oscuro">{eyebrow}</p>
+      <h1 class="text-h1">{title}</h1>
+      <p class="mt-4 max-w-texto text-lead text-tinta">{subtitle}</p>
+      <div class="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+        <DirectionsButton variant="primary" size="lg" block="mobile" />
+        <CallButton variant="secondary" size="lg" block="mobile" />
+      </div>
+      <div class="mt-3">
+        <HoursLink href="#horarios" />
+      </div>
+    </div>
+    <div class="motion-safe:animate-entrada motion-safe:[animation-delay:80ms] lg:col-span-6">
+      <HeroVisual image={image} />
+    </div>
+  </Container>
+</div>

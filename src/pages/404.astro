@@ -1,0 +1,25 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import CtaLink from '../components/CtaLink.astro';
+import DirectionsButton from '../components/DirectionsButton.astro';
+import { SYS } from '../content/copy';
+import { pageSeo } from '../content/seo';
+
+const seo = pageSeo['404'];
+---
+<BaseLayout
+  title={seo.title}
+  description={seo.description}
+  ogTitle={seo.ogTitle}
+  ogDescription={seo.ogDescription}
+  jsonLd={seo.jsonLd}
+  currentPath="/404"
+>
+  <PageHero title={SYS['404_H1']} subtitle={SYS['404_P']} illustration="canasta">
+    <div class="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+      <CtaLink href="/" label={SYS['404_CTA']} variant="primary" icon="home" block="mobile" />
+      <DirectionsButton variant="secondary" block="mobile" />
+    </div>
+  </PageHero>
+</BaseLayout>

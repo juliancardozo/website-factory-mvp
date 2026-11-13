@@ -1,0 +1,37 @@
+---
+// Teléfono desde site.ts (única fuente). BRIEF-VALIDAR antes de producción (B-03).
+import type { Surface } from '../content/types';
+import { phone, TEL_HREF } from '../content/site';
+import CallButton from './CallButton.astro';
+
+interface Props {
+  title?: string;
+  headingLevel?: 2 | 3;
+  headingId?: string;
+  showCallButton?: boolean;
+  surface?: Surface;
+  headingClass?: string;
+}
+const { title, headingLevel = 3, headingId, showCallButton = false, surface = 'light', headingClass } = Astro.props;
+const Heading = `h${headingLevel}` as 'h2' | 'h3';
+const dark = surface === 'dark';
+---
+<div>
+  {title && (
+    <Heading id={headingId} class:list={[headingClass ?? 'text-h3', dark && 'text-blanco']}>{title}</Heading>
+  )}
+  <p class:list={[title && 'mt-2']}>
+    <a
+      href={TEL_HREF}
+      class:list={[
+        'inline-flex min-h-11 items-center font-semibold tabular-nums underline decoration-1 underline-offset-[3px] hover:decoration-2',
+        dark ? 'text-crema hover:text-blanco' : 'text-verde-oscuro',
+      ]}
+    >{phone.display}</a>
+  </p>
+  {showCallButton && (
+    <div class="mt-4">
+      <CallButton variant="secondary" surface={surface} block="mobile" />
+    </div>
+  )}
+</div>

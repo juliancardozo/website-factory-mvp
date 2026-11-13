@@ -1,0 +1,32 @@
+---
+import type { Surface } from '../content/types';
+import { MAPS_URL } from '../content/site';
+import { CTA } from '../content/copy';
+import CtaLink from './CtaLink.astro';
+
+interface Props {
+  variant?: 'primary' | 'secondary' | 'ghost';
+  surface?: Surface;
+  size?: 'md' | 'lg';
+  label?: 'default' | 'alt';
+  block?: 'mobile' | 'always' | 'never';
+  compact?: boolean;
+  class?: string;
+}
+const { variant = 'primary', surface = 'light', size = 'lg', label = 'default', block, compact, class: className } = Astro.props;
+const text = label === 'alt' ? CTA.MAPS_ALT : CTA.MAPS;
+const aria = label === 'alt' ? CTA.MAPS_ALT_ARIA : CTA.MAPS_ARIA;
+---
+<CtaLink
+  href={MAPS_URL}
+  label={text}
+  ariaLabel={aria}
+  variant={variant}
+  surface={surface}
+  size={size}
+  icon="map-pin"
+  external
+  block={block}
+  compact={compact}
+  class={className}
+/>

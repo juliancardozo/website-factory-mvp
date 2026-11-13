@@ -1,0 +1,23 @@
+---
+import type { IconName } from '../content/types';
+import Icon from './Icon.astro';
+
+interface Props {
+  icon: IconName;
+  size?: 'md' | 'lg';
+  tone?: 'crema' | 'blanco';
+  class?: string;
+}
+const { icon, size = 'md', tone = 'crema', class: className } = Astro.props;
+---
+<span
+  aria-hidden="true"
+  class:list={[
+    'inline-flex shrink-0 items-center justify-center rounded-tile text-verde-oscuro',
+    size === 'lg' ? 'h-24 w-24' : 'h-14 w-14',
+    tone === 'crema' ? 'bg-crema' : 'bg-blanco',
+    className,
+  ]}
+>
+  <Icon name={icon} size={size === 'lg' ? 48 : 28} />
+</span>

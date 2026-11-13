@@ -1,0 +1,88 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HomeHero from '../components/HomeHero.astro';
+import Section from '../components/Section.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import CategoryGrid from '../components/CategoryGrid.astro';
+import CtaLink from '../components/CtaLink.astro';
+import BenefitList from '../components/BenefitList.astro';
+import OffersSection from '../components/OffersSection.astro';
+import InfoCard from '../components/InfoCard.astro';
+import AddressBlock from '../components/AddressBlock.astro';
+import HoursList from '../components/HoursList.astro';
+import DirectionsButton from '../components/DirectionsButton.astro';
+import CallButton from '../components/CallButton.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { categories, heroImage, offers } from '../content/site';
+import { CTA, HOME } from '../content/copy';
+import { pageSeo } from '../content/seo';
+
+const seo = pageSeo.home;
+---
+<BaseLayout
+  title={seo.title}
+  description={seo.description}
+  ogTitle={seo.ogTitle}
+  ogDescription={seo.ogDescription}
+  jsonLd={seo.jsonLd}
+  currentPath="/"
+>
+  <!-- S1 Hero -->
+  <HomeHero eyebrow={HOME.S1_EYEBROW} title={HOME.S1_H1} subtitle={HOME.S1_SUB} image={heroImage} />
+
+  <!-- S2 Cercanía -->
+  <Section id="cercania" tone="blanco" labelledBy="cercania-titulo" width="texto">
+    <SectionHeader headingId="cercania-titulo" title={HOME.S2_H2} align="center" class="!mb-4" />
+    <div class="space-y-3 text-center text-tinta lg:text-body-lg">
+      <p>{HOME.S2_P1}</p>
+      <p>{HOME.S2_P2}</p>
+    </div>
+  </Section>
+
+  <!-- S3 Categorías -->
+  <Section id="categorias" tone="crema" labelledBy="categorias-titulo">
+    <SectionHeader headingId="categorias-titulo" title={HOME.S3_H2} intro={HOME.S3_INTRO} />
+    <CategoryGrid categories={categories} density="compact" />
+    <div class="mt-8">
+      <CtaLink href="/productos" label={CTA.PRODUCTS} variant="secondary" icon="arrow-right" block="mobile" />
+    </div>
+  </Section>
+
+  <!-- S4 Beneficios -->
+  <Section id="beneficios" tone="blanco" labelledBy="beneficios-titulo">
+    <SectionHeader headingId="beneficios-titulo" title={HOME.S4_H2} />
+    <BenefitList items={HOME.S4_BENEFITS} columns={4} />
+  </Section>
+
+  <!-- S5 Ofertas (estado vacío) -->
+  <OffersSection
+    id="ofertas"
+    tone="crema"
+    headingId="ofertas-titulo"
+    title={HOME.S5_H2}
+    offers={offers}
+    empty={{ title: HOME.S5_EMPTY_T, text: HOME.S5_EMPTY_P }}
+    showHoursLink
+    hoursHref="#horarios"
+  />
+
+  <!-- S6 Ubicación y horarios (#horarios) -->
+  <Section id="horarios" tone="blanco" labelledBy="horarios-titulo">
+    <SectionHeader headingId="horarios-titulo" title={HOME.S6_H2} />
+    <div class="grid gap-4 md:grid-cols-2 md:gap-6 lg:grid-cols-12 lg:items-start lg:gap-8">
+      <InfoCard icon="map-pin" class="lg:col-span-4">
+        <AddressBlock title={HOME.S6_H3_ADDR} headingLevel={3} format="regional" />
+      </InfoCard>
+      <InfoCard icon="clock" class="lg:col-span-4">
+        <HoursList title={HOME.S6_H3_HOURS} headingLevel={3} />
+      </InfoCard>
+      <div class="flex flex-col gap-3 sm:flex-row sm:flex-wrap md:col-span-2 lg:col-span-4 lg:flex-col lg:items-start">
+        <DirectionsButton variant="primary" block="mobile" />
+        <CallButton variant="secondary" block="mobile" />
+      </div>
+    </div>
+  </Section>
+
+  <!-- S7 CTA final -->
+  <CtaBand headingId="visitanos-titulo" title={HOME.S7_H2} text={HOME.S7_P} secondary="call" />
+</BaseLayout>

@@ -1,0 +1,43 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import InfoNote from '../components/InfoNote.astro';
+import Section from '../components/Section.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import CategoryGrid from '../components/CategoryGrid.astro';
+import OffersSection from '../components/OffersSection.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { categories, offers } from '../content/site';
+import { PROD } from '../content/copy';
+import { pageSeo } from '../content/seo';
+
+const seo = pageSeo.productos;
+---
+<BaseLayout
+  title={seo.title}
+  description={seo.description}
+  ogTitle={seo.ogTitle}
+  ogDescription={seo.ogDescription}
+  jsonLd={seo.jsonLd}
+  currentPath="/productos"
+>
+  <PageHero title={PROD.S1_H1} subtitle={PROD.S1_SUB} illustration="canasta">
+    <InfoNote text={PROD.S1_NOTE} action="call" />
+  </PageHero>
+
+  <Section id="categorias" tone="blanco" labelledBy="categorias-titulo">
+    <SectionHeader headingId="categorias-titulo" title={PROD.S2_H2} />
+    <CategoryGrid categories={categories} density="full" />
+  </Section>
+
+  <OffersSection
+    id="ofertas"
+    tone="crema"
+    headingId="ofertas-titulo"
+    title={PROD.S3_H2}
+    offers={offers}
+    empty={{ title: PROD.S3_EMPTY_T, text: PROD.S3_EMPTY_P }}
+  />
+
+  <CtaBand headingId="visitanos-titulo" title={PROD.S4_H2} text={PROD.S4_P} secondary="hours" hoursHref="/contacto#horarios" />
+</BaseLayout>

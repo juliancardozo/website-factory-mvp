@@ -1,0 +1,108 @@
+@import "tailwindcss";
+
+/* Tokens: docs/design-system.md §2 (Supermercado Los Álamos). Paleta propuesta, no identidad oficial. */
+@theme {
+  /* Reinicia la paleta por defecto de Tailwind: solo colores aprobados (UX-01). */
+  --color-*: initial;
+
+  /* Paleta propuesta del brief — REQ-016 */
+  --color-verde: #27834B;
+  --color-verde-oscuro: #185C38;
+  --color-crema: #FFF9ED;
+  --color-blanco: #FFFFFF;
+  --color-amarillo: #F5C84C;
+  --color-tinta: #27332D;
+
+  /* Derivado decorativo (UX-02): bordes y separadores, sin texto. */
+  --color-borde: #E8DFCB;
+
+  /* Tipografía (research R-02): sin @fontsource ni CDN; fallback de sistema. */
+  --font-display: "Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  /* Escala fluida: 360px mínimo, 1440px máximo. */
+  --text-h1: clamp(2rem, 1.55rem + 1.9vw, 3rem);
+  --text-h1--line-height: 1.1;
+  --text-h1--letter-spacing: -0.02em;
+  --text-h2: clamp(1.625rem, 1.35rem + 1.2vw, 2.25rem);
+  --text-h2--line-height: 1.15;
+  --text-h2--letter-spacing: -0.015em;
+  --text-h3: clamp(1.25rem, 1.15rem + 0.45vw, 1.5rem);
+  --text-h3--line-height: 1.25;
+  --text-lead: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem);
+  --text-lead--line-height: 1.55;
+  --text-body: 1rem;
+  --text-body--line-height: 1.6;
+  --text-body-lg: 1.0625rem;
+  --text-body-lg--line-height: 1.65;
+  --text-small: 0.875rem;
+  --text-small--line-height: 1.45;
+
+  /* Radios */
+  --radius-btn: 0.75rem;
+  --radius-tile: 1rem;
+  --radius-card: 1.25rem;
+  --radius-media: 1.5rem;
+
+  /* Sombras suaves */
+  --shadow-card: 0 1px 2px rgb(39 51 45 / 0.06), 0 4px 16px rgb(39 51 45 / 0.06);
+  --shadow-raised: 0 2px 4px rgb(39 51 45 / 0.08), 0 12px 28px rgb(39 51 45 / 0.10);
+
+  /* Contenedores */
+  --container-site: 72rem;
+  --container-texto: 40rem;
+
+  /* Movimiento (design-system §9) */
+  --ease-suave: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --animate-entrada: entrada 420ms var(--ease-suave) both;
+
+  @keyframes entrada {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+}
+
+:root {
+  color-scheme: light;
+  --header-h: 4rem;
+}
+@media (min-width: 48rem) { :root { --header-h: 4.5rem; } }
+
+@layer base {
+  html {
+    background-color: var(--color-crema);
+    color: var(--color-tinta);
+    font-family: var(--font-sans);
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: calc(var(--header-h) + 1rem);
+  }
+  body { font-size: var(--text-body); line-height: var(--text-body--line-height); }
+  h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; color: var(--color-verde-oscuro); }
+  h1, h2 { font-weight: 700; }
+  h3 { font-weight: 600; }
+  p { text-wrap: pretty; }
+
+  /* Foco visible global (REQ-010, design-system §6.3) */
+  :focus-visible {
+    outline: 3px solid var(--color-verde-oscuro);
+    outline-offset: 3px;
+    border-radius: 0.375rem;
+  }
+  /* Superficies oscuras: foco amarillo (5.04 sobre verde-oscuro, 8.29 sobre tinta) */
+  [data-surface="dark"] :focus-visible { outline-color: var(--color-amarillo); }
+
+  /* main recibe foco programático desde el skip link: sin anillo */
+  main:focus { outline: none; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

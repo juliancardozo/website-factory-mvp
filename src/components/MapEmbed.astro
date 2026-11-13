@@ -1,0 +1,37 @@
+---
+// Mapa embebido (design-system §7.3, A-06). Iframe lazy sin API key; el enlace alternativo
+// se muestra siempre. enabled=false => sin iframe (sin carga de terceros).
+import { address, MAP_EMBED_URL } from '../content/site';
+import Illustration from './Illustration.astro';
+import DirectionsButton from './DirectionsButton.astro';
+
+interface Props {
+  title: string;
+  fallbackText: string;
+  enabled?: boolean;
+}
+const { title, fallbackText, enabled = true } = Astro.props;
+---
+<figure class="overflow-hidden rounded-media border border-borde bg-crema">
+  <div class="relative aspect-[4/3] md:aspect-[16/10]">
+    <div class="absolute inset-0">
+      <Illustration name="pin" class="h-full w-full" />
+      <p class="absolute inset-x-0 bottom-0 bg-crema px-4 py-2 text-small font-semibold text-tinta">{address.short}</p>
+    </div>
+    {enabled && (
+      <iframe
+        src={MAP_EMBED_URL}
+        title={title}
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        class="absolute inset-0 h-full w-full border-0"
+      ></iframe>
+    )}
+  </div>
+  <figcaption class="flex flex-col gap-2 bg-blanco p-4 md:p-5">
+    <p class="text-tinta">{fallbackText}</p>
+    <div>
+      <DirectionsButton label="alt" variant="ghost" />
+    </div>
+  </figcaption>
+</figure>

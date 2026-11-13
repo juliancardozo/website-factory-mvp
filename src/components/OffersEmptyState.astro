@@ -1,0 +1,25 @@
+---
+// Estado vacío honesto (REQ-006, B-01): sin precios, porcentajes ni fechas.
+import Illustration from './Illustration.astro';
+import CallButton from './CallButton.astro';
+import HoursLink from './HoursLink.astro';
+
+interface Props {
+  title: string;
+  text: string;
+  showHoursLink?: boolean;
+  hoursHref?: '#horarios' | '/#horarios' | '/contacto#horarios';
+}
+const { title, text, showHoursLink = false, hoursHref = '#horarios' } = Astro.props;
+---
+<div class="flex flex-col gap-5 rounded-card border-2 border-dashed border-borde bg-blanco p-6 md:p-8 lg:flex-row lg:items-center lg:gap-8">
+  <Illustration name="canasta" class="h-auto w-28 shrink-0 md:w-32" />
+  <div class="flex-1">
+    <h3 class="text-h3">{title}</h3>
+    <p class="mt-2 max-w-texto text-tinta">{text}</p>
+  </div>
+  <div class="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center lg:shrink-0 lg:flex-col lg:items-start">
+    <CallButton variant="secondary" block="mobile" />
+    {showHoursLink && <HoursLink href={hoursHref} />}
+  </div>
+</div>
