@@ -237,3 +237,13 @@ scripts/
 - No incluye generación de imágenes, Playwright, Lighthouse ni despliegue automático. La revisión visual (360/768/1440) se hizo con el navegador disponible en la sesión y quedó registrada en `docs/qa-report.md`.
 - `validate_content.py` es un escaneo heurístico, no reemplaza una auditoría de seguridad ni una revisión editorial.
 - Los resultados dependen del modelo y de la versión de Spec Kit; otra ejecución con el mismo brief puede dar otro sitio que cumpla igualmente la spec.
+
+---
+
+## Créditos y licencia
+
+- **[GitHub Spec Kit](https://github.com/github/spec-kit)**: toolkit de Spec-Driven Development en el que se apoya la fábrica. El contenido de `.specify/` (plantillas, scripts, workflow) y las skills `.claude/skills/speckit-*` lo generó `specify init` (versión 1.4.1.dev0) y pertenece a GitHub, Inc., bajo licencia MIT. Para la documentación y las versiones actuales, consultar su repositorio.
+- **[Claude Code](https://docs.claude.com/en/docs/claude-code)**: entorno de ejecución del orquestador y de los subagentes.
+- **[Astro](https://astro.build)** y **[Tailwind CSS](https://tailwindcss.com)**: stack del sitio generado.
+
+El resto del código y la documentación se distribuyen bajo licencia [MIT](LICENSE).
